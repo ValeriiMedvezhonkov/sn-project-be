@@ -53,14 +53,14 @@ builder.Services.AddCors(o => {
 });
 
 var connectionString = builder.Configuration.GetConnectionString("SnDbConnectionString");
-builder.Services.AddDbContext<SsDbContext>(options => {
+builder.Services.AddDbContext<SnDbContext>(options => {
     options.UseNpgsql(connectionString);
 });
 
 builder.Services.AddIdentityCore<ApiUser>()
     .AddRoles<IdentityRole<Guid>>()
     .AddTokenProvider<DataProtectorTokenProvider<ApiUser>>("SnBackendApi")
-    .AddEntityFrameworkStores<SsDbContext>()
+    .AddEntityFrameworkStores<SnDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));

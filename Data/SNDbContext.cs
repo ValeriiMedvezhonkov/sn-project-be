@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -6,10 +7,13 @@ using sn_project_be.Data.Configurations;
 
 namespace sn_project_be.Data;
 
-public class SsDbContext : IdentityDbContext<ApiUser, IdentityRole<Guid>, Guid>
+public class SnDbContext : IdentityDbContext<ApiUser, IdentityRole<Guid>, Guid>
 {
-    public SsDbContext(DbContextOptions options) : base(options)
-    { }
+    private readonly IMapper _mapper;
+    public SnDbContext(DbContextOptions options, IMapper mapper) : base(options)
+    {
+        _mapper = mapper;
+    }
     
     public DbSet<ApiUser> Users { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -31,6 +35,8 @@ public class SsDbContext : IdentityDbContext<ApiUser, IdentityRole<Guid>, Guid>
         modelBuilder.ApplyConfiguration(new RoleConfiguration(this));
         modelBuilder.ApplyConfiguration(new UserConfiguration(this));
         modelBuilder.ApplyConfiguration(new UserRoleConfiguration(this));
+        // modelBuilder.ApplyConfiguration(new UserConfigurationMaximaze());
+        modelBuilder.ApplyConfiguration(new UserConfigurationMaximaze(this, _mapper));
         
         modelBuilder.Entity<User_Post>()
             .HasOne(b => b.Post)

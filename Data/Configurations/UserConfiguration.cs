@@ -7,9 +7,9 @@ namespace sn_project_be.Data.Configurations;
 public class UserConfiguration : IEntityTypeConfiguration<ApiUser>
 {
 
-    private readonly SsDbContext _context;
+    private readonly SnDbContext _context;
 
-    public UserConfiguration(SsDbContext context)
+    public UserConfiguration(SnDbContext context)
     {
         _context = context;
     }

@@ -14,10 +14,10 @@ public class UsersManager : GenericRepository<ApiUser>, IUserManager
     private readonly UserManager<ApiUser> _userManager;
     private readonly IMapper _mapper;
     private readonly IFileService _fileService;
-    private readonly SsDbContext _context;
+    private readonly SnDbContext _context;
 
     public UsersManager(
-        SsDbContext context,
+        SnDbContext context,
         IMapper mapper,
         UserManager<ApiUser> userManager,
         IFileService fileService
@@ -78,15 +78,15 @@ public class UsersManager : GenericRepository<ApiUser>, IUserManager
         var existingInvitation = _context.Friendships.FirstOrDefault(f =>
             (f.SenderUserId == myId && f.ReceiverUserId == friendId) ||
             (f.SenderUserId == friendId && f.ReceiverUserId == myId));
-        
-        if (existingInvitation != null && existingInvitation.Status == FriendshipStatus.InvitationSent)
+
+        if (existingInvitation is not { Status: FriendshipStatus.InvitationSent })
         {
-            // Accept the invitation
-            existingInvitation.Status = FriendshipStatus.Accepted;
-            await _context.SaveChangesAsync();
-            return;
+            throw new NotFoundException("Friendship", friendId);
         }
-        throw new NotFoundException("Friendship", friendId);
+
+        // Accept the invitation
+        existingInvitation.Status = FriendshipStatus.Accepted;
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeclineFriendship(Guid myId, Guid friendId)
@@ -95,13 +95,13 @@ public class UsersManager : GenericRepository<ApiUser>, IUserManager
             (f.SenderUserId == myId && f.ReceiverUserId == friendId) ||
             (f.SenderUserId == friendId && f.ReceiverUserId == myId));
 
-        if (existingInvitation != null && existingInvitation.Status == FriendshipStatus.InvitationSent)
+        if (existingInvitation is not { Status: FriendshipStatus.InvitationSent })
         {
-            existingInvitation.Status = FriendshipStatus.Canceled;
-            await _context.SaveChangesAsync();
-            return;
+            throw new NotFoundException("Friendship", friendId);
         }
-        throw new NotFoundException("Friendship", friendId);
+
+        existingInvitation.Status = FriendshipStatus.Canceled;
+        await _context.SaveChangesAsync();
     }
 
     public async Task<List<ApiUser>> GetAllFriends(Guid myId)
@@ -116,7 +116,15 @@ public class UsersManager : GenericRepository<ApiUser>, IUserManager
         return friends;
     }
 
-    public async Task UpdateProfilePic(Guid userId, FileModel model)
+    public async Task<List<ApiUser>> GetAllFriendshipInvitations(Guid userId)
+    {
+        var friends = await _context.Friendships.Where(f =>
+            f.ReceiverUserId == userId && f.Status == FriendshipStatus.InvitationSent
+        ).Select(f => f.SenderUser).ToListAsync();
+        return friends;
+    }
+
+    public async Task<string> UpdateProfilePic(Guid userId, FileModel model)
     {
         var userUpd = await _userManager.FindByIdAsync(userId.ToString());
         if (userUpd == null)
@@ -131,5 +139,7 @@ public class UsersManager : GenericRepository<ApiUser>, IUserManager
         {
             throw new BadRequestException("Some error while User updating");
         }
+
+        return profilePicUrl;
     }
 }

@@ -4,6 +4,7 @@ using sn_project_be.Core.Exceptions;
 using sn_project_be.Core.Interfaces;
 using sn_project_be.Core.Models.Files;
 using sn_project_be.Core.Models.Users;
+using sn_project_be.Core.Pagination;
 using sn_project_be.Data;
 
 namespace sn_project_be.Controllers;
@@ -20,9 +21,9 @@ public class UsersController : BaseController
     
     // GET: api/Users/
     [HttpGet]
-    public async Task<ActionResult<List<ApiUser>>> GetUsers()
+    public async Task<ActionResult<List<ApiUser>>> GetUsers([FromQuery] QueryStringParameters paginationParameters)
     {
-        var users = await _userManager.GetAllAsync<GetAllUsersDto>();
+        var users = await _userManager.GetAllAsync<GetAllUsersDto>(paginationParameters);
         return Ok(users);
     }
     
@@ -60,8 +61,8 @@ public class UsersController : BaseController
     [HttpPut("/update-profile-pic")]
     public async Task<ActionResult> UpdateProfile([FromForm] FileModel model)
     {
-        await _userManager.UpdateProfilePic(new Guid(CurrentUserId!), model);
-        return Ok();
+        var profilePicUrl = await _userManager.UpdateProfilePic(new Guid(CurrentUserId!), model);
+        return Ok(profilePicUrl);
     }
     
     [Authorize]
@@ -89,10 +90,18 @@ public class UsersController : BaseController
     }
 
     [Authorize]
-    [HttpGet("/get-friends")]
-    public async Task<ActionResult<List<ApiUser>>> GetAllFriends()
+    [HttpGet("/get-friends/{userId:guid}")]
+    public async Task<ActionResult<List<ApiUser>>> GetAllFriends(Guid userId)
     {
-        var friends = await _userManager.GetAllFriends(new Guid(CurrentUserId!));
+        var friends = await _userManager.GetAllFriends(userId);
+        return Ok(friends);
+    }
+    
+    [Authorize]
+    [HttpGet("/friendship-invitations/{userId:guid}")]
+    public async Task<ActionResult<List<ApiUser>>> GetAllFriendshipInvitations(Guid userId)
+    {
+        var friends = await _userManager.GetAllFriendshipInvitations(userId);
         return Ok(friends);
     }
 }

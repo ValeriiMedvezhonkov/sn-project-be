@@ -12,6 +12,6 @@ public class LoginDto
 
     [Required]
     [StringLength(15, ErrorMessage = "Your Password is limited to {2} to {1} characters", MinimumLength = 6)]
-    [DefaultValue("mysecretpassword")]
+    [DefaultValue("Mysecretpass1%")]
     public string Password { get; set; }
 }

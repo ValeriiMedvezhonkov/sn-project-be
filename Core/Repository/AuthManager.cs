@@ -24,7 +24,7 @@ public class AuthManager : IAuthManager
     public async Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto)
     {
         var user = _mapper.Map<ApiUser>(userDto);
-        user.UserName = userDto.Email;
+        user.UserName = userDto.Email.Split("@")[0];
 
         var result = await _userManager.CreateAsync(user, userDto.Password);
 

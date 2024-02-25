@@ -13,14 +13,14 @@ namespace sn_project_be.Core.Repository;
 
 public class JwtService: IJwtUtils
 {
-    private readonly SsDbContext _context;
+    private readonly SnDbContext _context;
     private readonly UserManager<ApiUser> _userManager;
     private readonly IConfiguration _configuration;
     
     private const string LoginProvider = "SnBackendApi";
     private const string RefreshToken = "RefreshToken";
     
-    public JwtService(SsDbContext context,  UserManager<ApiUser> userManager, IConfiguration configuration ) {
+    public JwtService(SnDbContext context,  UserManager<ApiUser> userManager, IConfiguration configuration ) {
         _context = context;
         _userManager = userManager;
         _configuration = configuration;

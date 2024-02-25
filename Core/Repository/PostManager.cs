@@ -12,9 +12,9 @@ public class PostManager: GenericRepository<Post>, IPostManager
 {
     private readonly IFileService _fileService;
     private readonly IMapper _mapper;
-    private readonly SsDbContext _context;
+    private readonly SnDbContext _context;
 
-    public PostManager(SsDbContext context, IMapper mapper, IFileService fileService) : base(context, mapper)
+    public PostManager(SnDbContext context, IMapper mapper, IFileService fileService) : base(context, mapper)
     {
         _context = context;
         _fileService = fileService;

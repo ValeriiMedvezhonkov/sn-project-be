@@ -6,9 +6,9 @@ namespace sn_project_be.Data.Configurations;
 
 public class UserRoleConfiguration : IEntityTypeConfiguration<IdentityUserRole<Guid>>
 {
-    private readonly SsDbContext _context;
+    private readonly SnDbContext _context;
 
-    public UserRoleConfiguration(SsDbContext context)
+    public UserRoleConfiguration(SnDbContext context)
     {
         _context = context;
     }

@@ -1,18 +1,20 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using sn_project_be.Core.Exceptions;
 using sn_project_be.Core.Interfaces;
+using sn_project_be.Core.Pagination;
 using sn_project_be.Data;
 
 namespace sn_project_be.Core.Repository;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private readonly SsDbContext _context;
+    private readonly SnDbContext _context;
     private readonly IMapper _mapper;
 
-    public GenericRepository(SsDbContext context, IMapper mapper)
+    public GenericRepository(SnDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -45,11 +47,16 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<List<TResult>> GetAllAsync<TResult>()
+    public async Task<List<TResult>> GetAllAsync<TResult>(QueryStringParameters paginationParameters)
     {
         return await _context.Set<T>()
             .ProjectTo<TResult>(_mapper.ConfigurationProvider)
             .ToListAsync();
+    }
+    
+    public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+    {
+        return _context.Set<T>().Where(expression).AsNoTracking();
     }
 
     public async Task<T> AddAsync(T entity)

@@ -2,6 +2,7 @@ using AutoMapper;
 using sn_project_be.Core.Models.Posts;
 using sn_project_be.Core.Models.Users;
 using sn_project_be.Data;
+using sn_project_be.Data.Configurations;
 
 namespace sn_project_be.Core.Configurations;
 
@@ -17,5 +18,7 @@ public class MapperConfig : Profile
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember, destMember) => srcMember != null));
         
         CreateMap<CreatePost, Post>().ReverseMap();
+        
+        CreateMap<ConfigureUsers, ApiUser>();
     }
 }

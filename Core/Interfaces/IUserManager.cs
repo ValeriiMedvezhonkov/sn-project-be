@@ -13,5 +13,6 @@ public interface IUserManager : IGenericRepository<ApiUser>
     Task AcceptFriendship(Guid myId, Guid friendId);
     Task DeclineFriendship(Guid myId, Guid friendId);
     Task<List<ApiUser>> GetAllFriends(Guid myId);
-    Task UpdateProfilePic(Guid userId, [FromForm] FileModel model);
+    Task<List<ApiUser>> GetAllFriendshipInvitations(Guid myId);
+    Task<string> UpdateProfilePic(Guid userId, [FromForm] FileModel model);
 }
