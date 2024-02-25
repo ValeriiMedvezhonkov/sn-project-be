@@ -47,11 +47,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<List<TResult>> GetAllAsync<TResult>(QueryStringParameters paginationParameters)
+    public async Task<PaginationResponse<TResult>> GetAllAsync<TResult>(UserParameters paginationParameters)
     {
-        return await _context.Set<T>()
-            .ProjectTo<TResult>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        var query = _context.Set<T>().ProjectTo<TResult>(_mapper.ConfigurationProvider).AsQueryable();
+        return await PagedList<T>.ToPagedResponse(query, paginationParameters.PageNumber, paginationParameters.PageSize);
     }
     
     public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)

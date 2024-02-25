@@ -7,7 +7,7 @@ public interface IGenericRepository<T> where T : class
     Task<T> GetAsync(Guid id);
     Task<TResult> GetAsync<TResult>(Guid id);
     Task<List<T>> GetAllAsync();
-    Task<List<TResult>> GetAllAsync<TResult>(QueryStringParameters paginationParameters);
+    Task<PaginationResponse<TResult>> GetAllAsync<TResult>(UserParameters paginationParameters);
     Task<T> AddAsync(T entity);
     Task<TResult> AddAsync<TSource, TResult>(TSource source);
     Task DeleteAsync(Guid id);

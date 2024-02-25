@@ -83,141 +83,141 @@ public class UserConfigurationMaximaze : IEntityTypeConfiguration<ApiUser>, IUse
         {
             new ConfigureUsers
             {
-                FirstName = "Yuli Hinton",
-                LastName = "Wilma Rollins",
+                FirstName = "Yuli",
+                LastName = "Hinton",
                 Email = "porttitor.scelerisque.neque@google.org",
                 UserName = "Gannon",
             },
             new ConfigureUsers
             {
-                FirstName = "Maisie Lawrence",
-                LastName = "Kitra Soto",
+                FirstName = "Maisie",
+                LastName = "Lawrence",
                 Email = "ut.odio@yahoo.couk",
                 UserName = "Arden",
             },
             new ConfigureUsers
             {
-                FirstName = "Bianca Baxter",
-                LastName = "Felix Herman",
+                FirstName = "Bianca",
+                LastName = "Baxter",
                 Email = "pede.nec@outlook.com",
                 UserName = "Bo",
             },
             new ConfigureUsers
             {
-                FirstName = "George Weber",
-                LastName = "Marsden Contreras",
+                FirstName = "George",
+                LastName = "Weber",
                 Email = "risus.in@icloud.net",
                 UserName = "Hu",
             },
             new ConfigureUsers
             {
-                FirstName = "MacKenzie Burnett",
-                LastName = "Sophia Boyle",
+                FirstName = "MacKenzie",
+                LastName = "Burnett",
                 Email = "purus.mauris@google.ca",
                 UserName = "Iris",
             },
             new ConfigureUsers
             {
-                FirstName = "Kiara Perez",
-                LastName = "Desirae Hoover",
+                FirstName = "Kiara",
+                LastName = "Perez",
                 Email = "vitae@yahoo.net",
                 UserName = "Maggie",
             },
             new ConfigureUsers
             {
-                FirstName = "Holmes Burton",
-                LastName = "Melissa Burgess",
+                FirstName = "Holmes",
+                LastName = "Burton",
                 Email = "fusce.diam.nunc@yahoo.org",
                 UserName = "Fredericka",
             },
             new ConfigureUsers
             {
-                FirstName = "Ralph Valdez",
-                LastName = "Beverly Contreras",
+                FirstName = "Ralph",
+                LastName = "Valdez",
                 Email = "et.netus.et@outlook.edu",
                 UserName = "Vladimir",
             },
             new ConfigureUsers
             {
-                FirstName = "Victoria Weaver",
-                LastName = "Paul Gomez",
+                FirstName = "Victoria",
+                LastName = "Weaver",
                 Email = "ipsum.curabitur@outlook.com",
                 UserName = "Cailin",
             },
             new ConfigureUsers
             {
-                FirstName = "Ursa Pickett",
-                LastName = "Dara Buckner",
+                FirstName = "Ursa",
+                LastName = "Pickett",
                 Email = "blandit.congue@protonmail.ca",
                 UserName = "Amena",
             },
             new ConfigureUsers
             {
-                FirstName = "Amity Hess",
-                LastName = "Alice Berry",
+                FirstName = "Amity",
+                LastName = "Hess",
                 Email = "non.vestibulum@outlook.ca",
                 UserName = "Debra",
             },
             new ConfigureUsers
             {
-                FirstName = "Cooper Briggs",
-                LastName = "Anastasia Heath",
+                FirstName = "Cooper",
+                LastName = "Briggs",
                 Email = "metus.in@protonmail.edu",
                 UserName = "Kaye",
             },
             new ConfigureUsers
             {
-                FirstName = "Brynne Johnson",
-                LastName = "Colby Dominguez",
+                FirstName = "Brynne",
+                LastName = "Johnson",
                 Email = "quisque@hotmail.edu",
                 UserName = "Timon",
             },
             new ConfigureUsers
             {
-                FirstName = "Bruno Hurst",
-                LastName = "James Bender",
+                FirstName = "Bruno",
+                LastName = "Hurst",
                 Email = "sed.molestie@icloud.couk",
                 UserName = "Bert",
             },
             new ConfigureUsers
             {
-                FirstName = "Brandon Waller",
-                LastName = "Brenden Brady",
+                FirstName = "Brandon",
+                LastName = "Waller",
                 Email = "integer.vulputate@yahoo.com",
                 UserName = "Phillip",
             },
             new ConfigureUsers
             {
-                FirstName = "Gage Goodman",
-                LastName = "Ursula Bradshaw",
+                FirstName = "Gage",
+                LastName = "Goodman",
                 Email = "sed.nec@hotmail.org",
                 UserName = "Leah",
             },
             new ConfigureUsers
             {
-                FirstName = "Melissa Rosa",
-                LastName = "Ariana Tanner",
+                FirstName = "Melissa",
+                LastName = "Rosa",
                 Email = "turpis.in.condimentum@icloud.edu",
                 UserName = "Unity",
             },
             new ConfigureUsers
             {
-                FirstName = "Serina Sparks",
-                LastName = "Vanna Dyer",
+                FirstName = "Serina",
+                LastName = "Sparks",
                 Email = "suscipit.nonummy@yahoo.couk",
                 UserName = "Abbot",
             },
             new ConfigureUsers
             {
-                FirstName = "Nyssa Forbes",
-                LastName = "Margaret Berg",
+                FirstName = "Nyssa",
+                LastName = "Forbes",
                 Email = "urna@outlook.net",
                 UserName = "Hayes",
             },
             new ConfigureUsers
             {
-                FirstName = "Jelani Conrad",
-                LastName = "Stewart Blankenship",
+                FirstName = "Jelani",
+                LastName = "Conrad",
                 Email = "amet.risus.donec@hotmail.ca",
                 UserName = "Kay"
             }
