@@ -17,7 +17,7 @@ public class JwtService: IJwtUtils
     private readonly UserManager<ApiUser> _userManager;
     private readonly IConfiguration _configuration;
     
-    private const string LoginProvider = "SsBackendApi";
+    private const string LoginProvider = "SnBackendApi";
     private const string RefreshToken = "RefreshToken";
     
     public JwtService(SsDbContext context,  UserManager<ApiUser> userManager, IConfiguration configuration ) {
@@ -87,15 +87,19 @@ public class JwtService: IJwtUtils
     {
         await _userManager.RemoveAuthenticationTokenAsync(user, LoginProvider, RefreshToken);
         var newRefreshToken = await _userManager.GenerateUserTokenAsync(user, LoginProvider, RefreshToken);
-        var result = await _userManager.SetAuthenticationTokenAsync(user, LoginProvider, RefreshToken, newRefreshToken);
+        await _userManager.SetAuthenticationTokenAsync(user, LoginProvider, RefreshToken, newRefreshToken);
         return newRefreshToken;
     }
     
-    public async Task<AuthResponseDto?> VerifyRefreshToken(AuthResponseDto request)
+    public async Task<AuthResponseDto?> VerifyRefreshToken(RefreshTokenDto request)
     {
         var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
         var tokenContent = jwtSecurityTokenHandler.ReadJwtToken(request.Token);
         var username = tokenContent.Claims.ToList().FirstOrDefault(q => q.Type == JwtRegisteredClaimNames.Email)?.Value;
+        if (username == null)
+        {
+            return null;
+        }
         var user = await _userManager.FindByEmailAsync(username);
     
         if(user == null || user.Id.ToString() != request.UserId)
@@ -111,7 +115,7 @@ public class JwtService: IJwtUtils
             return new AuthResponseDto
             {
                 Token = token,
-                UserId = user.Id.ToString(),
+                UserProfile = user,
                 RefreshToken = await CreateRefreshToken(user)
             };
         }

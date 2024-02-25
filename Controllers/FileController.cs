@@ -21,7 +21,7 @@ public class FileController: ControllerBase
     [HttpPost]
     public async Task<IActionResult> Upload([FromForm]FileModel model)
     {
-        await  _fileService.UploadProfilePicture(model);
-        return Ok();
+        var imageUri = await  _fileService.UploadProfilePicture(model);
+        return Ok(imageUri);
     }
 }

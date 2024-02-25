@@ -36,15 +36,20 @@ public class AuthManager : IAuthManager
         return result.Errors;
     }
 
-    public async Task<AuthResponseDto> Login(LoginDto loginDto)
+    public async Task<AuthResponseDto?> Login(LoginDto loginDto)
     {
         _logger.LogInformation($"Looking for user with email {loginDto.Email}");
         var user = await _userManager.FindByEmailAsync(loginDto.Email);
-        var isValidUser = await _userManager.CheckPasswordAsync(user, loginDto.Password);
-            
-        if(user == null || isValidUser == false)
+        if (user == null)
         {
             _logger.LogWarning($"User with email {loginDto.Email} was not found");
+            return null;
+        }
+        var isValidUser = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            
+        if(isValidUser == false)
+        {
+            _logger.LogWarning($"User with email {loginDto.Email} was found, but password is incorrect");
             return null;
         }
 
@@ -54,8 +59,14 @@ public class AuthManager : IAuthManager
         return new AuthResponseDto
         {
             Token = token,
-            UserId = user.Id.ToString(),
+            UserProfile = user,
             RefreshToken = await _jwtService.CreateRefreshToken(user)
         };
+    }
+
+    public async Task<AuthResponseDto?> RefreshToken( RefreshTokenDto refreshTokenDto)
+    {
+        var a = await _jwtService.VerifyRefreshToken(refreshTokenDto);
+        return a;
     }
 }

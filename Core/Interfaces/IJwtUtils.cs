@@ -9,5 +9,5 @@ public interface IJwtUtils
     public Task<string> GenerateJwtToken(ApiUser user);
     public JwtResponseDto? ValidateJwtToken(string token);
     Task<string> CreateRefreshToken(ApiUser user);
-    Task<AuthResponseDto?> VerifyRefreshToken(AuthResponseDto request);
+    Task<AuthResponseDto?> VerifyRefreshToken(RefreshTokenDto request);
 }

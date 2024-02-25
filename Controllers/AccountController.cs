@@ -59,4 +59,16 @@ public class AccountController : ControllerBase
         return Ok(authResponse);
 
     }
+
+    [HttpPost]
+    [Route("refresh-token")]
+    public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenDto refreshTokenDto)
+    {
+        var a = await _authManager.RefreshToken(refreshTokenDto);
+        if (a == null)
+        {
+            return NotFound();
+        }
+        return Ok(a);
+    }
 }

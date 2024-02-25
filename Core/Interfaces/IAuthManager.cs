@@ -6,5 +6,6 @@ namespace sn_project_be.Core.Interfaces;
 public interface IAuthManager
 {
     Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto);
-    Task<AuthResponseDto> Login(LoginDto loginDto);
+    Task<AuthResponseDto?> Login(LoginDto loginDto);
+    Task<AuthResponseDto?> RefreshToken(RefreshTokenDto refreshTokenDto);
 }
