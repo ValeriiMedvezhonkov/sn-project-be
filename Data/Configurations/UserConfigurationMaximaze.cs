@@ -62,16 +62,11 @@ public class ConfigureUsers
     public DateTime UpdatedAt => DateTime.UtcNow;
 }
 
-
-public interface IUserConfigurationMaximaze
-{
-    public void Configure(EntityTypeBuilder<ApiUser> builder);
-}
-public class UserConfigurationMaximaze : IEntityTypeConfiguration<ApiUser>, IUserConfigurationMaximaze
+public class UserConfigurationMaximize : IEntityTypeConfiguration<ApiUser>
 {
     private readonly SnDbContext _context;
     private readonly IMapper _mapper;
-    public UserConfigurationMaximaze(SnDbContext context, IMapper mapper)
+    public UserConfigurationMaximize(SnDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

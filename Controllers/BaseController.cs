@@ -5,5 +5,5 @@ namespace sn_project_be.Controllers;
 public class BaseController: ControllerBase
 {
     // returns the current authenticated UserId (null if not logged in)
-    public string? CurrentUserId => (string)HttpContext.Items["UserId"];
+    public string? CurrentUserId => (string)HttpContext.Items["UserId"]!;
 }

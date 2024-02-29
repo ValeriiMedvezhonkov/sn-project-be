@@ -35,8 +35,8 @@ public class SnDbContext : IdentityDbContext<ApiUser, IdentityRole<Guid>, Guid>
         modelBuilder.ApplyConfiguration(new RoleConfiguration(this));
         modelBuilder.ApplyConfiguration(new UserConfiguration(this));
         modelBuilder.ApplyConfiguration(new UserRoleConfiguration(this));
-        // modelBuilder.ApplyConfiguration(new UserConfigurationMaximaze());
-        modelBuilder.ApplyConfiguration(new UserConfigurationMaximaze(this, _mapper));
+        modelBuilder.ApplyConfiguration(new UserConfigurationMaximize(this, _mapper));
+        modelBuilder.ApplyConfiguration(new PostConfiguration(this, _mapper));
         
         modelBuilder.Entity<User_Post>()
             .HasOne(b => b.Post)

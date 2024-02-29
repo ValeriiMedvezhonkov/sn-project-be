@@ -1,9 +1,11 @@
+using System.Dynamic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sn_project_be.Core.Exceptions;
 using sn_project_be.Core.Interfaces;
 using sn_project_be.Core.Models.Posts;
 using sn_project_be.Core.Models.Users;
+using sn_project_be.Core.Pagination;
 using sn_project_be.Data;
 
 namespace sn_project_be.Controllers;
@@ -21,9 +23,9 @@ public class PostController : BaseController
     
     // GET: api/Posts/
     [HttpGet]
-    public async Task<ActionResult<List<Post>>> GetPosts()
+    public async Task<ActionResult<PaginationResponse<Post>>> GetPosts([FromQuery] PostParameters paginationParameters)
     {
-        var posts = await _postManager.GetAllAsync();
+        var posts = await _postManager.GetAllAsync<Post, GetAllPostsFilterParams, PostParameters>(paginationParameters);
         return Ok(posts);
     }
 
@@ -31,7 +33,7 @@ public class PostController : BaseController
     [HttpPost]
     public async Task<ActionResult<Post>> CreatePost(CreatePost createPost)
     {
-        var post = await _postManager.CreatePost(createPost, CurrentUserId);
+        var post = await _postManager.CreatePost(createPost, CurrentUserId!);
         return Ok(post);
     }
     

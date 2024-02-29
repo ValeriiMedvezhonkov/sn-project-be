@@ -1,8 +1,10 @@
 using System.Linq.Expressions;
+using System.Reflection;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using sn_project_be.Core.Exceptions;
+using sn_project_be.Core.Helpers;
 using sn_project_be.Core.Interfaces;
 using sn_project_be.Core.Pagination;
 using sn_project_be.Data;
@@ -47,10 +49,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<PaginationResponse<TResult>> GetAllAsync<TResult>(UserParameters paginationParameters)
+    public async Task<PaginationResponse<TResult>> GetAllAsync<TResult, TFilterParams, TQueryParams>(TQueryParams paginationParameters) where TQueryParams : QueryStringParameters
     {
         var query = _context.Set<T>().ProjectTo<TResult>(_mapper.ConfigurationProvider).AsQueryable();
-        return await PagedList<T>.ToPagedResponse(query, paginationParameters.PageNumber, paginationParameters.PageSize);
+        var expression = ExpressionBuilder<TResult, TFilterParams>.Build(paginationParameters.Search);
+        var filteredPeople = query.AsEnumerable().Where(expression.Compile()).AsQueryable();
+        return await PagedList<T>.ToPagedResponse(filteredPeople, paginationParameters.PageNumber,
+            paginationParameters.PageSize);
     }
     
     public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)

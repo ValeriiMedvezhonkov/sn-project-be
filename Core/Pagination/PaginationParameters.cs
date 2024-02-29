@@ -16,4 +16,5 @@ public abstract class QueryStringParameters
             _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
     }
+    public string? Search { get; set; }
 }

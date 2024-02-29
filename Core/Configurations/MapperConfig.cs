@@ -20,5 +20,7 @@ public class MapperConfig : Profile
         CreateMap<CreatePost, Post>().ReverseMap();
         
         CreateMap<ConfigureUsers, ApiUser>();
+        CreateMap<ConfigurePosts, Post>();
+        CreateMap<Post, Post>();
     }
 }

@@ -23,7 +23,7 @@ public class UsersController : BaseController
     [HttpGet]
     public async Task<ActionResult<PaginationResponse<GetAllUsersDto>>> GetUsers([FromQuery] UserParameters paginationParameters)
     {
-        var usersPagination = await _userManager.GetAllAsync<GetAllUsersDto>(paginationParameters);
+        var usersPagination = await _userManager.GetAllAsync<GetAllUsersDto, GetAllUsersFilterParams, UserParameters>(paginationParameters);
         return Ok(usersPagination);
     }
     
